@@ -1,6 +1,7 @@
 # apple-retail-sql-analysis
 Apple Retail Ecosystem: 2023 Performance & Warranty Analysis
 
+* Dataset: [Apple Retail Sales Dataset](https://www.kaggle.com/datasets/amangarg08/apple-retail-sales-dataset?resource=download) oleh Aman Garg.
 📌 Project Overview
 
 This project provides an end-to-end data analysis of a global Apple Retail dataset ($200M+ simulated revenue) for the 2023 fiscal year. Using T-SQL (SSMS 22), I analyzed three core business pillars: Revenue Performance, Geographic Distribution, and Service Quality (Warranty Operations).
