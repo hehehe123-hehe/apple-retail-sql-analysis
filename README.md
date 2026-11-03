@@ -1,38 +1,47 @@
-# apple-retail-sql-analysis
-Apple Retail Ecosystem: 2023 Performance & Warranty Analysis
+# Apple Retail 2023: Sales, Geography & Warranty Analysis (T-SQL)
 
-* Dataset: [Apple Retail Sales Dataset](https://www.kaggle.com/datasets/amangarg08/apple-retail-sales-dataset?resource=download) oleh Aman Garg.
+SQL Server (SSMS 22) analysis of the [Apple Retail Sales Dataset](https://www.kaggle.com/datasets/amangarg08/apple-retail-sales-dataset) on Kaggle, by Aman Garg. The data is synthetic.
 
-📌 Project Overview
+## Project overview
 
-This project provides an end-to-end data analysis of a global Apple Retail dataset ($200M+ simulated revenue) for the 2023 fiscal year. Using T-SQL (SSMS 22), I analyzed three core business pillars: Revenue Performance, Geographic Distribution, and Service Quality (Warranty Operations).
+End-to-end analysis of 2023 (213,453 transactions, $1.26B revenue) across three business areas:
 
-📊 Business Key Performance Indicators (KPIs)
+1. **Revenue performance:** which categories and products drove sales.
+2. **Geographic distribution:** which countries, cities and stores lead.
+3. **Warranty and service quality:** how often products are claimed and how efficient the repair pipeline is.
 
-Total Revenue: Identified $133M+ revenue in the Smartphone category alone.
+The 2023 figures were reconciled across **T-SQL, Python (Google Colab) and Power BI**, and all three return identical results.
 
-Market Share: Calculated the percentage of warranty claims per category using window functions to identify operational pressure points.
+## Key findings (2023)
 
-Service Reliability: Measured the "Average Days to Claim" to flag product durability trends across 11 categories.
+- **Revenue:** $1,261,440,123. Tablet leads ($195.2M, 15.5%), followed by Accessories ($191.0M) and Smartphone ($176.0M).
+- **Geography:** the United States contributes $254.1M (20.1%). Dubai, London and Paris tie at about $67M each because each has four stores; revenue per store is about $16.6M to $17.0M everywhere.
+- **Warranty:** 6,109 claims, a claim rate of 2.86% of transactions. 50.5% of claims are still Pending or In Progress. The highest product claim rate is Beats Fit Pro (3.83%).
 
-Operational Efficiency: Created a repair status dashboard (Pivot) to monitor the "In Progress" vs. "Completed" pipeline.
+Full breakdown: [INSIGHTS.md](INSIGHTS.md)
 
-🛠️ Technical Skills Demonstrated
+## SQL techniques used
 
-Advanced Aggregations: Using SUM, COUNT, and AVG across complex multi-table joins.
+- Multi-table INNER and LEFT JOINs with GROUP BY aggregations (SUM, COUNT, AVG)
+- CTE with `ROW_NUMBER() OVER (PARTITION BY ...)` for the top 10 products per category
+- `CASE WHEN` pivot for repair status
+- Data cleaning: `TRY_CAST` for text-formatted dates, with a data check (0 failed casts across 1,040,200 rows)
+- Date arithmetic: `DATEDIFF` for days from purchase to claim; half-open date range filters
 
-Window Functions: Utilizing OVER() to calculate relative percentages without subqueries.
+## Files
 
-Data Transformation: Implementing CASE WHEN logic to pivot status data for executive reporting.
+- `apple-retail-sql-analysis.sql`: the analysis script, in three sections (sales, geography, warranty)
+- `INSIGHTS.md`: findings written for non-technical readers
 
-Data Integrity: Safe casting of types using TRY_CAST and DATEDIFF for time-series analysis.
+## How to run
 
-Shorthand Schema: Optimized for SSMS 22 using the .. database shorthand.
+1. Download the dataset from Kaggle.
+2. Import the CSV files into a SQL Server database named `Myportoproject`.
+3. Run `apple-retail-sql-analysis.sql`.
 
-📁 Repository Structure
+## Data notes
 
-apple_retail_analysis.sql: The complete script containing all 17 strategic business queries.
+- The dataset covers January 2020 to November 2024. All analysis is limited to 2023.
+- Different stores can share one name (for example, two stores are called "Apple The Dubai Mall"), and two products are both called "HomePod mini". Queries group by ID, not by name.
 
-INSIGHTS.md: A detailed breakdown of the business findings for non-technical stakeholders.
-
-Developed as a professional portfolio project to demonstrate SQL proficiency in retail and operations analytics.
+Author: Rukoyah (Hehe)
